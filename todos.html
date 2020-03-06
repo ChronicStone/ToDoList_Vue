@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./todos.css">
+</head>
+<body>
+  <div id="todos">
+    <section class="todoapp">
+      <header class="header">
+        <h1>Todos</h1>
+          <input v-on:keyup.enter="doAdd" type="text" class="new-todo" placeholder="Ajouter une tache" ref="task">
+      </header>
+
+
+      <div class="main">
+        <input type="checkbox" id="toggle-all" class="toggle-all" @click="toggleAll">
+        <label for="toggle-all">Mark all as complete</label>
+        <ul class="todo-list" v-for="query in tasksList" :key="query.index">
+          <listquery v-if="updateList[query.index]"
+            :value="query.value"
+            :index="query.index"
+            :editStatus="query.edit"
+            :state="query.state"
+            :sorttype="updateType[0]"
+            :sorttype2="updateType[1]"
+            :boolstate="updateStateSelect[query.index]"
+            @updateState="doUpdate(query, query.state, query.index)"
+            @destroyElem="doDestroy(query, query.state)"
+            @editStat="query.edit = false;">
+          </listquery>
+        </ul>
+      </div>
+      <footer class="footer" v-if="nbElem!=0">
+        <span class="todo-count"><strong>{{nbToDo}}</strong> tâches à faire</span>
+        <ul class="filters">
+          <li><a href="#" id="all" class="selected" @click="showAll">Toutes</a></li>
+          <li><a href="#" id="todo" @click="showToDo">À faire</a></li>
+          <li><a href="#" id="done" @click="showDone">Faites</a></li>
+        </ul>
+        <button @click="clearAll()" v-if="nbDone!=0" class="clear-completed">Clear accomplished</button>
+      </footer>
+    </section>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+  <script src="./todos.js"></script>
+</body>
+</html>
